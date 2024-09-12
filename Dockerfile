@@ -24,5 +24,4 @@ COPY src/ ./src
 ENV PYTHONUNBUFFERED=1
 
 # Command to run your Python script
-CMD ["python", "./src/random_forest.py"]
-
+CMD ["bash"]
