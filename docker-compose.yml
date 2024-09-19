@@ -3,35 +3,23 @@ version: '3.8'
 services:
   dev:
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: python-dev-env
-    volumes:
-      - .:/app  # Mount the current directory for live code updates
-      - ./src:/app/src  # Optional: If you want to specifically mount the source code
-    working_dir: /app
+      context: .  # Use the current directory to build the Docker image
+      dockerfile: Dockerfile  # Use the provided Dockerfile
+    container_name: python-cuda-dev-env  # Name the container
+    runtime: nvidia  # Enable NVIDIA GPU support
     environment:
-      - PYTHONUNBUFFERED=1  # Ensure Python output is not buffered (real-time output)
+      - NVIDIA_VISIBLE_DEVICES=all  # Make all GPUs visible to the container
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility  # Required driver capabilities for CUDA
+      - PYTHONUNBUFFERED=1  # Ensures real-time output in the terminal
+    volumes:
+      - .:/app  # Mount the project directory into the container for live updates
+      - ./src:/app/src  # Mount the 'src' folder specifically into the container
+    working_dir: /app  # Set the working directory inside the container
     ports:
-      - "8888:8888"  # Expose a port for Jupyter Notebook or other dev tools
-    command: bash  # Keep the container running with a shell
-    tty: true  # Keep the container interactive
-    stdin_open: true  # Allow interactive commands like testing
-    depends_on:
-      - test  # Optionally, to ensure tests run when starting
-
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: python-test-env
-    volumes:
-      - .:/app  # Mount the current directory
-    working_dir: /app
-    environment:
-      - PYTHONUNBUFFERED=1
-    command: python -m unittest discover -s test  # Run tests from 'test' folder
-    tty: true  # Keep the container interactive
+      - "8888:8888"  # Expose port 8888 (for running Jupyter Notebook or any other app)
+    command: bash  # Keep the container running with a bash shell
+    tty: true  # Enable interactive mode
+    stdin_open: true  # Allow interaction with the container (useful for testing)
 
 volumes:
   app:
