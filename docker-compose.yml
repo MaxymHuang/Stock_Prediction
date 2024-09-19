@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   dev:
@@ -20,7 +19,4 @@ services:
     command: bash  # Keep the container running with a bash shell
     tty: true  # Enable interactive mode
     stdin_open: true  # Allow interaction with the container (useful for testing)
-
-volumes:
-  app:
 
