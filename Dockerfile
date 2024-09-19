@@ -16,6 +16,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 # Copy the requirements file and install dependencies (if any)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install jupyter
 
 # Copy the application code
 COPY src/ ./src
@@ -23,5 +24,8 @@ COPY src/ ./src
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 
+# Expose the port for Jupyter Notebook
+EXPOSE 8888
+
 # Command to run your Python script
-CMD ["bash"]
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
