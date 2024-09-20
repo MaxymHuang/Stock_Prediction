@@ -1,4 +1,4 @@
-# Use the official NVIDIA CUDA 11.8 runtime image as the base
+Use the official NVIDIA CUDA 11.8 runtime image as the base
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
 # Set a working directory
@@ -17,6 +17,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install jupyter
+RUN pip install jupytext
 
 # Copy the application code
 COPY src/ ./src
@@ -27,5 +28,6 @@ ENV PYTHONUNBUFFERED=1
 # Expose the port for Jupyter Notebook
 EXPOSE 8888
 
-# Command to run your Python script
+# Command to run Jupyter Notebook without a token
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
+
