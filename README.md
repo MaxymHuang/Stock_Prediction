@@ -1,6 +1,6 @@
 # Stock Prediction
 This project aims to create a working ML algorithm that predicts stock trend. 
-By using Neural Network LSTM algorithm, we train the model to accurately predicts prices with technical indicators such as Moving Averages, RSI, MACD etc., and with this algorithm trained, we aim to implement this model into real trading strategies by creating a trading bot of our own. \n
+By using Neural Network LSTM algorithm, we train the model to accurately predicts prices with technical indicators such as Moving Averages, RSI, MACD etc., and with this algorithm trained, we aim to implement this model into real trading strategies by creating a trading bot of our own. \
 This specific branch (mac) has a Dockerfile optimized for macOS with arm64 architecture
 ## Table of Contents
 - [Installation](#installation)
