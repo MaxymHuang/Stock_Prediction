@@ -1,22 +1,15 @@
+version: '3.8'
 
 services:
-  dev:
+  jupyter-notebook:
     build:
-      context: .  # Use the current directory to build the Docker image
-      dockerfile: Dockerfile  # Use the provided Dockerfile
-    container_name: python-cuda-dev-env  # Name the container
-    runtime: nvidia  # Enable NVIDIA GPU support
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all  # Make all GPUs visible to the container
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility  # Required driver capabilities for CUDA
-      - PYTHONUNBUFFERED=1  # Ensures real-time output in the terminal
-    volumes:
-      - .:/app  # Mount the project directory into the container for live updates
-      - ./src:/app/src  # Mount the 'src' folder specifically into the container
-    working_dir: /app  # Set the working directory inside the container
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8888:8888"  # Expose port 8888 (for running Jupyter Notebook or any other app)
-    command: bash  # Keep the container running with a bash shell
-    tty: true  # Enable interactive mode
-    stdin_open: true  # Allow interaction with the container (useful for testing)
+      - "8888:8888"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: jupyter notebook --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
 
